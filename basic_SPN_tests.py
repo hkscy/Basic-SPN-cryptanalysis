@@ -2,7 +2,7 @@ import basic_SPN as cipher
 
 pbox = {0:0, 1:4, 2:8, 3:12, 4:1, 5:5, 6:9, 7:13, 8:2, 9:6, 10:10, 11:14, 12:3, 13:7, 14:11, 15:15}
 
-#test pbox functionality/symmetry
+# test pbox functionality/symmetry
 def testPBox(statem: list, pbox: dict):
     staten = [0]*len(pbox)
     for tpi, tp in enumerate(statem):
@@ -18,7 +18,7 @@ if testpBoxm != testpBoxo:
 else:
     print('PASS: pbox inverse functional')
     
-#test that encryption and decryption are symmetric operations    
+# test that encryption and decryption are symmetric operations    
 def testEncDecSymmetry(n):
     k = cipher.keyGeneration()
     ct = [cipher.encrypt(pt, k) for pt in range(0, n)]

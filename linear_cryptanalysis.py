@@ -1,28 +1,28 @@
-#Linear cryptanalysis of a basic SPN cipher
-#Try to determine linear expressions between input and output bits which have
-#a linear probability bias. Randomly chosen bits would only satisfy the 
-#expression with probability 0.5 (Matsui's Piling up Lemma)
+# Linear cryptanalysis of a basic SPN cipher
+# Try to determine linear expressions between input and output bits which have
+# a linear probability bias. Randomly chosen bits would only satisfy the 
+# expression with probability 0.5 (Matsui's Piling up Lemma)
 
 import basic_SPN as cipher
 from math import trunc, fabs
 import itertools as it
 import collections
 
-#Return bit n from (int) bits of intended bit-length 4
+# Return bit n from (int) bits of intended bit-length 4
 def getNibbleBit(bits, n):
     return int(bin(bits)[2:].zfill(4)[n])
 
-#Return bit n from (int) bits of intended bit-length 16    
+# Return bit n from (int) bits of intended bit-length 16    
 def getShortBit(bits, n):
     return int(bin(bits)[2:].zfill(16)[n])    
 
-#Build table of input values
+# Build table of input values
 sbox_in = ["".join(seq) for seq in it.product("01", repeat=4)]
-#Build a table of output values
+# Build a table of output values
 sbox_out = [ bin(cipher.sbox[int(seq,2)])[2:].zfill(4) for seq in sbox_in ]
-#Build an ordered dictionary between input and output values
+# Build an ordered dictionary between input and output values
 sbox_b = collections.OrderedDict(zip(sbox_in,sbox_out))
-#Initialise LAT
+# Initialise LAT
 probBias = [[0 for x in range(len(sbox_b))] for y in range(len(sbox_b))] 
 
 print('Linear Approximation Table for basic SPN cipher\'s sbox: ')
@@ -41,7 +41,7 @@ for bits in sbox_b.items():
         for y_idx in range (0, len(equations_out)):
             probBias[x_idx][y_idx] += (equations_in[x_idx]==equations_out[y_idx])
 
-#print linear approximation table
+# print linear approximation table
 for bias in probBias:
     for bia in bias:
         #trunc(((bia/16.0)-0.5)*16.0)

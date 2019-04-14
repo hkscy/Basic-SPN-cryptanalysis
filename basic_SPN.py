@@ -1,11 +1,11 @@
-#A basic Substitution-Permutation Network cipher, implemented by following 
-#'A Tutorial on Linear and Differential Cryptanalysis'
+# A basic Substitution-Permutation Network cipher, implemented by following 
+# 'A Tutorial on Linear and Differential Cryptanalysis'
 # by Howard M. Heys
 #
-# 02/12/16 Alice Hicks 
+# 02/12/16 Chris Hicks 
 #
-#Basic SPN cipher which takes as input a 16-bit input block and has 4 rounds.
-#Each round consists of (1) substitution (2) transposition (3) key mixing
+# Basic SPN cipher which takes as input a 16-bit input block and has 4 rounds.
+# Each round consists of (1) substitution (2) transposition (3) key mixing
 
 import random
 import hashlib
@@ -13,11 +13,11 @@ import hashlib
 blockSize = 16
 verboseState = False
 
-#(1) Substitution: 4x4 bijective, one sbox used for all 4 sub-blocks of size 4. Nibble wise
+# (1) Substitution: 4x4 bijective, one sbox used for all 4 sub-blocks of size 4. Nibble wise
 sbox = {0:0xE, 1:0x4, 2:0xD, 3:0x1, 4:0x2, 5:0xF, 6:0xB, 7:0x8, 8:0x3, 9:0xA, 0xA: 0x6, 0xB: 0xC, 0xC:0x5, 0xD:0x9, 0xE: 0x0, 0xF:0x7} #key:value
 sbox_inv = {0xE:0, 0x4:1, 0xD:2, 0x1:3, 0x2:4, 0xF:5, 0xB:6, 0x8:7, 0x3:8, 0xA:9, 0x6:0xA, 0xC:0xB, 0x5:0xC, 0x9:0xD, 0x0:0xE, 0x7:0xF}
 
-#Apply sbox (1) to a 16 bit state and return the result
+# Apply sbox (1) to a 16 bit state and return the result
 def apply_sbox(state, sbox):
     subStates = [state&0x000f, (state&0x00f0)>>4, (state&0x0f00)>>8, (state&0xf000)>>12]
     for idx,subState in enumerate(subStates):
@@ -25,10 +25,10 @@ def apply_sbox(state, sbox):
     return subStates[0]|subStates[1]<<4|subStates[2]<<8|subStates[3]<<12
     
 
-#(2) Permutation. Applied bit-wise
+# (2) Permutation. Applied bit-wise
 pbox = {0:0, 1:4, 2:8, 3:12, 4:1, 5:5, 6:9, 7:13, 8:2, 9:6, 10:10, 11:14, 12:3, 13:7, 14:11, 15:15}
 
-#(3) Key mixing: bitwise XOR between round subkey and data block input to round
+# (3) Key mixing: bitwise XOR between round subkey and data block input to round
 # Key schedule: independant random round keys. 
 def keyGeneration():
     k = hashlib.sha1( hex(random.getrandbits(blockSize*8)).encode('utf-8') ).hexdigest()[2:2+20]
@@ -61,7 +61,7 @@ def encrypt(pt, k):
         state = state_temp
         if verboseState: print (hex(state))
     
-    #Final round of SPN cipher (k4, sbox, s5)
+    # Final round of SPN cipher (k4, sbox, s5)
     state = state^subKeys[-2] #penultimate subkey (key 4) mixing
     if verboseState: print (str(3), hex(state), end = ' ')   
     state = apply_sbox(state,sbox)

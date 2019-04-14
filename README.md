@@ -6,10 +6,7 @@ by Howard M. Heys
 Basic SPN cipher which takes as input a 16-bit input block and has 4 rounds.
 Each round consists of (1) substitution (2) transposition (3) key mixing
 
-hkscy.org
-
-#Appendix
-#Figure 1: Constructing linear approximations for the complete cipher
+# Constructing linear approximations for the complete cipher
 
 To do this we concatenate linear approximations through multiple rounds.
 Linear approximations are given by the linear approximation table

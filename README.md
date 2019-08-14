@@ -1,5 +1,5 @@
 A basic Substitution-Permutation Network (SPN) cipher and it's cryptanalysis 
-using both linear methods., implemented by following 'A Tutorial on Linear 
+using the linear method. Implemented by following 'A Tutorial on Linear 
 and Differential Cryptanalysis' by Howard M. Heys. This project has been 
 developed using Python 3.7.3.
 
@@ -14,7 +14,9 @@ in CSV format.
 
 2. linear_cryptanalysis - Attacks the basic SPN cipher using linear cryptanalysis. 
 We derive a linear approximation for the first three rounds that we then
-use to derive some of the key bits. 
+use to derive some of the key bits. Running this file will print the Linear Approximation
+Table for the simple SPN S-box, generate a random key and then will recover 8~bits 
+of the key using linear cryptanalytic techniques.
 
 # Constructing linear approximations for the complete cipher
 

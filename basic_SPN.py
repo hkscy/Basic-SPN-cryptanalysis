@@ -14,7 +14,7 @@ blockSize = 16
 verboseState = False
 
 # (1) Substitution: 4x4 bijective, one sbox used for all 4 sub-blocks of size 4. Nibble wise
-sbox = {0:0xE, 1:0x4, 2:0xD, 3:0x1, 4:0x2, 5:0xF, 6:0xB, 7:0x8, 8:0x3, 9:0xA, 0xA: 0x6, 0xB: 0xC, 0xC:0x5, 0xD:0x9, 0xE: 0x0, 0xF:0x7} #key:value
+sbox =     {0:0xE, 1:0x4, 2:0xD, 3:0x1, 4:0x2, 5:0xF, 6:0xB, 7:0x8, 8:0x3, 9:0xA, 0xA:0x6, 0xB:0xC, 0xC:0x5, 0xD:0x9, 0xE:0x0, 0xF:0x7} #key:value
 sbox_inv = {0xE:0, 0x4:1, 0xD:2, 0x1:3, 0x2:4, 0xF:5, 0xB:6, 0x8:7, 0x3:8, 0xA:9, 0x6:0xA, 0xC:0xB, 0x5:0xC, 0x9:0xD, 0x0:0xE, 0x7:0xF}
 
 # Apply sbox (1) to a 16 bit state and return the result
@@ -29,9 +29,11 @@ def apply_sbox(state, sbox):
 pbox = {0:0, 1:4, 2:8, 3:12, 4:1, 5:5, 6:9, 7:13, 8:2, 9:6, 10:10, 11:14, 12:3, 13:7, 14:11, 15:15}
 
 # (3) Key mixing: bitwise XOR between round subkey and data block input to round
-# Key schedule: independant random round keys. 
+# Key schedule: independant random round keys.
+# We take the sha-hash of a 128-bit 'random' seed and then take the first 80-bits
+# of the output as out round keys K1-K5 (Each 16 bits long). (not secure, this is just a demo)
 def keyGeneration():
-    k = hashlib.sha1( hex(random.getrandbits(blockSize*8)).encode('utf-8') ).hexdigest()[2:2+20]
+    k = hashlib.sha1( hex(random.getrandbits(128)).encode('utf-8') ).hexdigest()[2:2+20]
     return k
 
 # Simple SPN Cipher encrypt function

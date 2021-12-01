@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Dat files created by basic_SPN.py
+*.dat
+
 # Distribution / packaging
 .Python
 build/
